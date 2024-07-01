@@ -3,11 +3,13 @@ extends RigidBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
+	
 	var animations = $AnimatedSprite2D.sprite_frames.get_animation_names() # obtener nombres de las animaciones 
-	pass # Replace with function body.
-	$AnimatedSprite2D.play(animations[randi() % animations.size()])
+	#animacion, animacion , animacion
+	$AnimatedSprite2D.play(animations[randi() % animations.size()]) #llama animaciones del 0 al 2
 												#tamaño de la  animacion
-	print(animations)
+
 	
 	
 

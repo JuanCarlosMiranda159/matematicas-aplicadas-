@@ -1,10 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4h6o0dysuxhl"]
+[gd_scene load_steps=5 format=3 uid="uid://c4h6o0dysuxhl"]
 
 [ext_resource type="PackedScene" uid="uid://cycxpbnmev0v5" path="res://scenes/player.tscn" id="1_52a6e"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_ta8gi"]
 [ext_resource type="PackedScene" uid="uid://ybggknqk1k4e" path="res://scenes/enemy.tscn" id="2_6pakc"]
 
+[sub_resource type="Curve2D" id="Curve2D_pk3b4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
 [node name="main" type="Node2D"]
+script = ExtResource("1_ta8gi")
+enemy_scene = ExtResource("2_6pakc")
 
 [node name="player" parent="." instance=ExtResource("1_52a6e")]
 
-[node name="Enemy2D" parent="." instance=ExtResource("2_6pakc")]
+[node name="enemyTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="scoreTimer" type="Timer" parent="."]
+
+[node name="startimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="starposition" type="Marker2D" parent="."]
+position = Vector2(40, 384)
+
+[node name="enemyPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_pk3b4")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="enemyPath"]
+
+[connection signal="timeout" from="enemyTimer" to="." method="_on_enemy_timer_timeout"]
+[connection signal="timeout" from="scoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="startimer" to="." method="_on_startimer_timeout"]
